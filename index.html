@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Academic website of Sixun Tang">
+  <title>Sixun Tang</title>
+
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5f6b76;
+      --accent: #7b263a;
+      --accent-soft: #f4eaed;
+      --line: #dfe3e6;
+      --paper: #fff;
+      --background: #f7f6f2;
+      --content-width: 1060px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--background);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--accent);
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover { text-decoration-thickness: 2px; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(223, 227, 230, 0.9);
+      background: rgba(247, 246, 242, 0.94);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav {
+      width: min(calc(100% - 40px), var(--content-width));
+      margin: auto;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav-name {
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    main {
+      width: min(calc(100% - 40px), var(--content-width));
+      margin: auto;
+    }
+
+    .hero {
+      min-height: 560px;
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      align-items: center;
+      gap: 72px;
+      padding: 80px 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.16;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.1rem, 4vw, 3.1rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+    }
+
+    .name-pronunciation {
+      position: relative;
+      display: inline-block;
+    }
+
+    .pronunciation-trigger {
+      padding: 0;
+      border: 0;
+      border-bottom: 1px dotted var(--accent);
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+    }
+
+    .pronunciation-trigger:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 5px;
+    }
+
+    .pronunciation-note {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      z-index: 2;
+      width: max-content;
+      max-width: min(300px, 80vw);
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--paper);
+      box-shadow: 0 8px 24px rgba(23, 32, 42, 0.12);
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: normal;
+      line-height: 1.4;
+    }
+
+    .pronunciation-play {
+      margin-left: 8px;
+      padding: 2px 7px;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--accent);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .pronunciation-play:hover {
+      background: var(--accent-soft);
+    }
+
+    .pronunciation-play:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .role {
+      max-width: 620px;
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .intro {
+      max-width: 650px;
+      margin: 22px 0 0;
+    }
+
+    .interests-copy {
+      max-width: 650px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      white-space: nowrap;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 9px 17px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      background: var(--accent);
+      color: white;
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .button.placeholder {
+      min-height: 34px;
+      padding: 5px 10px;
+      border-color: var(--line);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: default;
+    }
+
+    .portrait {
+      aspect-ratio: 4 / 5;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: linear-gradient(145deg, #eee8e2, #ddd6cf);
+      box-shadow: 18px 18px 0 var(--accent-soft);
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .section {
+      padding: 88px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section.interests-section {
+      padding: 46px 0;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 48px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 2.15rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+
+    .papers {
+      display: grid;
+      gap: 42px;
+    }
+
+    .teaching-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px 34px;
+    }
+
+    .teaching-grid .paper,
+    .teaching-grid .paper:last-child {
+      padding: 0 0 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .teaching-grid h3 {
+      font-size: 1.08rem;
+      line-height: 1.3;
+    }
+
+    .teaching-grid .paper-meta {
+      margin-top: 5px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .references-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px 34px;
+    }
+
+    .reference {
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .reference h3 {
+      font-size: 1.08rem;
+      line-height: 1.3;
+    }
+
+    .reference p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    .reference-role {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .paper {
+      padding-bottom: 42px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .paper:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .paper-label {
+      margin: 0 0 7px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 750;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 600;
+    }
+
+    .paper-meta {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .paper-abstract { margin: 15px 0 0; }
+
+    .abstract-dropdown {
+      margin-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .abstract-dropdown summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 11px 0;
+      color: var(--accent);
+      font-size: 0.86rem;
+      font-weight: 700;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .abstract-dropdown summary::-webkit-details-marker { display: none; }
+
+    .abstract-dropdown summary::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform 160ms ease;
+    }
+
+    .abstract-dropdown[open] summary {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .abstract-dropdown[open] summary::after {
+      transform: rotate(225deg);
+    }
+
+    .abstract-dropdown .paper-abstract {
+      margin: 0;
+      padding: 16px 0 2px;
+    }
+
+    .paper-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 14px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .draft-note {
+      margin: 13px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .misc-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .misc-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--paper);
+    }
+
+    .misc-card h3 { font-size: 1.15rem; }
+    .misc-card p { margin: 8px 0 0; color: var(--muted); }
+
+    .misc-description {
+      max-width: 650px;
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    footer {
+      width: min(calc(100% - 40px), var(--content-width));
+      margin: auto;
+      padding: 34px 0 48px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 760px) {
+      .nav { min-height: 58px; }
+      .nav-links { gap: 13px; font-size: 0.82rem; }
+      .nav-links li:first-child { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 42px;
+        padding: 56px 0 72px;
+      }
+
+      .portrait {
+        width: min(100%, 360px);
+        grid-row: 1;
+        box-shadow: 12px 12px 0 var(--accent-soft);
+      }
+
+      .section-heading { grid-template-columns: 1fr; gap: 32px; }
+      .section { padding: 68px 0; }
+      .interests-copy { white-space: normal; }
+      .teaching-grid { grid-template-columns: 1fr; }
+      .references-grid { grid-template-columns: 1fr; }
+      .misc-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav-name" href="#top">Sixun Tang</a>
+      <ul class="nav-links">
+        <li><a href="#research">Research</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="cv.pdf">CV</a></li>
+        <li><a href="#references">References</a></li>
+        <li><a href="#miscellaneous">Miscellaneous</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <figure class="portrait">
+        <img src="photo-website-v3.png" alt="Portrait of Sixun Tang">
+      </figure>
+
+      <div>
+        <h1>
+          <span class="name-pronunciation">
+            <button
+              class="pronunciation-trigger"
+              type="button"
+              aria-label="Show the pronunciation of Sixun"
+              aria-expanded="false"
+              aria-controls="name-pronunciation"
+            >Sixun</button>
+            <span class="pronunciation-note" id="name-pronunciation" hidden>
+              Sīxūn · sī xūn, both first tone
+              <button class="pronunciation-play" type="button" aria-label="Play the pronunciation of Sixun">▶ Play</button>
+            </span>
+            <audio id="name-pronunciation-audio" src="name-pronunciation.m4a" preload="metadata"></audio>
+          </span>
+          Tang
+        </h1>
+        <p class="role">
+          PhD Candidate · University of Chicago
+        </p>
+        <p class="intro">
+          Hi, I am Sixun. I am a PhD candidate in the Joint Program in Financial
+          Economics at the
+          <a href="https://www.chicagobooth.edu/" target="_blank" rel="noopener noreferrer">University of Chicago Booth School of Business</a>
+          and the
+          <a href="https://economics.uchicago.edu/" target="_blank" rel="noopener noreferrer">Kenneth C. Griffin Department of Economics</a>,
+          where I study corporate innovation, entrepreneurship and
+          patent litigation.
+        </p>
+        <p class="intro">
+          <strong>I'll be on the 2026-2027 academic job market.</strong>
+        </p>
+        <div class="actions">
+          <a class="button" href="https://www.dropbox.com/scl/fi/god1kfne0k4nr2nvjpr9r/CV_Sixun_latest.pdf?rlkey=vdjwo43eg1vi9998ba61v6mo4&amp;dl=0" target="_blank" rel="noopener noreferrer">Download CV</a>
+          <a class="button secondary" href="mailto:sixun-tang@chicagobooth.edu">Email me</a>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section interests-section">
+      <div class="section-heading">
+        <h2>Research Interests</h2>
+        <p class="interests-copy">
+          Corporate finance, macro finance, innovation, entrepreneurship,
+          patent litigation, growth, economics of AI
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="research">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Selected work</p>
+          <h2>Research</h2>
+        </div>
+
+        <div class="papers">
+          <article class="paper">
+            <p class="paper-label">Job Market Paper</p>
+            <h3>From Labs to Lawsuits: Patent Litigation As A Strategic Margin</h3>
+            <details class="abstract-dropdown">
+              <summary>Abstract</summary>
+              <p class="paper-abstract">
+                Patent enforcement is intended to protect innovation, but
+                operating firms may also use litigation strategically to defend
+                product market rents at rivals’ expense. This paper studies
+                patent litigation as a margin of product market competition. A
+                simple model predicts that both the decision to sue and the
+                resources committed to litigation increase with the contested
+                market position, as captured by the parties’ product-market
+                proximity. I test these predictions using the universe of U.S.
+                patent suits between operating firms and two new measures:
+                product-market proximity constructed from workforce skills and
+                litigation effort constructed from court dockets and attorney
+                billing records. Three findings support the strategic litigation
+                view. First, a one-standard-deviation higher exposure to an
+                adverse shock to patent strength reduces filings by 25 percent.
+                Second, conditional on measures of infringement risk, patentees
+                target their closest product-market rivals and fight them harder.
+                A rival one standard deviation closer faces 1.7 times the odds of
+                being sued and 18 to 22 percent higher litigation expenditures on
+                both sides, yet plaintiffs win no more often against closer
+                rivals. Third, an active enforcer’s closer rivals face a greater
+                expected litigation burden even when they are not sued. Following
+                a suit, the enforcer’s closest rivals produce approximately 4.6
+                percent fewer breakthrough patents after two years, while the
+                defendant’s rivals exhibit no comparable response. Taken
+                together, the results suggest that patent enforcement between
+                operating firms reallocates rents toward enforcing incumbents and
+                weakens innovation beyond the litigating parties.
+              </p>
+            </details>
+            <div class="paper-links">
+              <a href="https://www.dropbox.com/scl/fi/jztnrr3nhss0zeibl8xa6/Job_Market_Paper_latest.pdf?rlkey=16vtbsh1t6v1wcy2mtx54fbow&amp;e=1&amp;dl=0" target="_blank" rel="noopener noreferrer">Paper</a>
+            </div>
+          </article>
+
+          <article class="paper">
+            <p class="paper-label">Working Paper</p>
+            <h3>When AI Meets Entrepreneurship: Evidence from the Commercialization of ChatGPT</h3>
+            <p class="paper-meta">With Edoardo Marchesi</p>
+            <details class="abstract-dropdown">
+              <summary>Abstract</summary>
+              <p class="paper-abstract">
+                This paper examines how the commercialization of generative
+                artificial intelligence influences new firm creation, leveraging
+                the release of ChatGPT as a quasi-exogenous shock to AI
+                accessibility. We develop a novel entrepreneurship-specific
+                measure of AI compatibility at the industry level, which captures
+                the extent to which AI tools can support the tasks entrepreneurs
+                perform when starting a firm. Using a difference-in-differences
+                design, we find that industries more compatible with AI
+                experienced an increase of over 10% in firm formation following
+                ChatGPT’s release. To investigate why, we examine three
+                mechanisms: reduced experimentation costs, capital reallocation,
+                and skill gap bridging. While we find no evidence supporting the
+                latter two, we show that the increase in firm formation is
+                concentrated in industries where AI can effectively assist and
+                experimentation is critical—evidence consistent with a reduction
+                in the cost of experimentation as the key driver. Moreover, new
+                firms created after ChatGPT’s release in AI-compatible industries
+                are more likely to survive, grow faster, and attract more educated
+                workers. Taken together, the mechanism and quality results suggest
+                that AI lowers the cost of experimentation in a way that
+                disproportionately benefits high-ability entrepreneurs, leading
+                to both greater and higher-quality firm formation.
+              </p>
+            </details>
+            <div class="paper-links">
+              <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5759264" target="_blank" rel="noopener noreferrer">Paper</a>
+            </div>
+          </article>
+
+          <article class="paper">
+            <p class="paper-label">Working Paper</p>
+            <h3>Building or Blocking: Financing Constraints, Defensive Action, and Aggregate Innovation</h3>
+            <details class="abstract-dropdown">
+              <summary>Abstract</summary>
+              <p class="paper-abstract">
+                Do more financing sources lead to more innovation? This
+                seemingly simple question requires second thoughts given the
+                complex nature of the interaction between firms. In this paper,
+                I construct an endogenous growth model with three new
+                ingredients: defensive action, heterogeneous innovativeness of
+                firms, and financing constraint. The prediction of the model
+                distinguishes two separate cases following a positive financing
+                shock: if the leader is more innovative, more financing sources
+                would enable leaders to do more innovation, thus promoting the
+                innovation rate in the industry; on the other hand, if the
+                leader is less innovative, more financing sources would make it
+                more involved in defensive action and hamper aggregation cost.
+                Thus the impact on aggregate innovation is ambiguous. Moreover,
+                due to the impact of differential innovation rate, there is a
+                distributional effect: industries with less innovative leaders
+                will increase, and may lead to a slowdown in aggregate economic
+                growth.
+              </p>
+            </details>
+            <p class="draft-note"><em>Draft coming soon!</em></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="teaching">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Teaching Assistant</p>
+          <h2>Teaching</h2>
+        </div>
+
+        <div class="teaching-grid">
+          <article class="paper">
+            <h3>International Corporate Finance (MBA)</h3>
+            <p class="paper-meta">
+              TA for Prof. Raghuram Rajan · Winter 2025, Spring 2026 · Chicago Booth
+            </p>
+          </article>
+
+          <article class="paper">
+            <h3>Artificial Intelligence, Innovation, and Growth (MA)</h3>
+            <p class="paper-meta">
+              TA for Profs. Ufuk Akcigit and James Evans · Winter 2026 · University of Chicago
+            </p>
+          </article>
+
+          <article class="paper">
+            <h3>Corporation Finance (MBA)</h3>
+            <p class="paper-meta">
+              TA for Prof. Anil Kashyap · Winter 2024 · Chicago Booth
+            </p>
+          </article>
+
+          <article class="paper">
+            <h3>Emerging Markets Finance and Entrepreneurship (MBA)</h3>
+            <p class="paper-meta">
+              TA for Prof. Emanuele Colonnelli · Winter 2026 · Chicago Booth
+            </p>
+          </article>
+
+          <article class="paper">
+            <h3>Corporation Finance (MBA)</h3>
+            <p class="paper-meta">
+              TA for Prof. Theo Vermaelen · Summer 2025 · Chicago Booth
+            </p>
+          </article>
+
+          <article class="paper">
+            <h3>The Fintech Revolution (MBA)</h3>
+            <p class="paper-meta">
+              TA for Prof. Luigi Zingales · Spring 2025 · Chicago Booth
+            </p>
+          </article>
+
+          <article class="paper">
+            <h3>Introductory Finance (MBA)</h3>
+            <p class="paper-meta">
+              TA for Prof. George Constantinides · Fall 2022, Fall 2023 · Chicago Booth
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="references">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Academic references</p>
+          <h2>References</h2>
+        </div>
+
+        <div class="references-grid">
+          <article class="reference">
+            <h3>Amir Sufi <span class="reference-role">(Chair)</span></h3>
+            <p>
+              University of Chicago<br>
+              Booth School of Business<br>
+              <a href="mailto:amir.sufi@chicagobooth.edu">amir.sufi@chicagobooth.edu</a>
+            </p>
+          </article>
+
+          <article class="reference">
+            <h3>Anil Kashyap</h3>
+            <p>
+              University of Chicago<br>
+              Booth School of Business<br>
+              <a href="mailto:anil.kashyap@chicagobooth.edu">anil.kashyap@chicagobooth.edu</a>
+            </p>
+          </article>
+
+          <article class="reference">
+            <h3>Emanuele Colonnelli</h3>
+            <p>
+              University of Chicago<br>
+              Booth School of Business<br>
+              <a href="mailto:emanuele.colonnelli@chicagobooth.edu">emanuele.colonnelli@chicagobooth.edu</a>
+            </p>
+          </article>
+
+          <article class="reference">
+            <h3>Ufuk Akcigit</h3>
+            <p>
+              University of Chicago<br>
+              Kenneth C. Griffin Department of Economics<br>
+              <a href="mailto:uakcigit@uchicago.edu">uakcigit@uchicago.edu</a>
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="miscellaneous">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Beyond research</p>
+          <h2>Miscellaneous</h2>
+        </div>
+
+        <p class="misc-description">
+          Outside research, I play competitive badminton
+          (check out my <a href="https://www.youtube.com/@billcurryTSX30" target="_blank" rel="noopener noreferrer">channel</a>!).
+          I also enjoy running and singing.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Sixun Tang · Last updated October 2026
+  </footer>
+
+  <script>
+    const namePronunciation = document.querySelector(".name-pronunciation");
+    const pronunciationTrigger = document.querySelector(".pronunciation-trigger");
+    const pronunciationNote = document.querySelector("#name-pronunciation");
+    const pronunciationPlay = document.querySelector(".pronunciation-play");
+    const pronunciationAudio = document.querySelector("#name-pronunciation-audio");
+    let pronunciationCloseTimer;
+
+    const cancelPronunciationClose = () => {
+      window.clearTimeout(pronunciationCloseTimer);
+      pronunciationCloseTimer = undefined;
+    };
+
+    const closePronunciation = () => {
+      cancelPronunciationClose();
+      pronunciationTrigger.setAttribute("aria-expanded", "false");
+      pronunciationNote.hidden = true;
+    };
+
+    const schedulePronunciationClose = () => {
+      cancelPronunciationClose();
+      pronunciationCloseTimer = window.setTimeout(closePronunciation, 250);
+    };
+
+    pronunciationTrigger.addEventListener("click", () => {
+      cancelPronunciationClose();
+      pronunciationTrigger.setAttribute("aria-expanded", "true");
+      pronunciationNote.hidden = false;
+    });
+
+    pronunciationPlay.addEventListener("click", () => {
+      pronunciationAudio.currentTime = 0;
+      pronunciationAudio.play().catch(() => {});
+    });
+
+    namePronunciation.addEventListener("pointerenter", cancelPronunciationClose);
+    namePronunciation.addEventListener("pointerleave", schedulePronunciationClose);
+    pronunciationNote.addEventListener("pointerenter", cancelPronunciationClose);
+
+    namePronunciation.addEventListener("focusout", (event) => {
+      if (!namePronunciation.contains(event.relatedTarget)) closePronunciation();
+    });
+
+    document.addEventListener("pointerdown", (event) => {
+      if (!namePronunciation.contains(event.target)) closePronunciation();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closePronunciation();
+    });
+  </script>
+</body>
+</html>
